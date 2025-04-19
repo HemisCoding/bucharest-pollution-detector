@@ -173,8 +173,5 @@ cython_debug/
 # PyPI configuration file
 .pypirc
 
-# Ignore all CSV and Parquet files inside data/ and its subfolders
-data/**/*.csv
-data/**/*.parquet
-*.csv
-*.parquet
+# Ignore all contents of data/ folder
+data/
