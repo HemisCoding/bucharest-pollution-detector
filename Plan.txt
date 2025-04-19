@@ -1,0 +1,53 @@
+Step-by-Step Plan
+
+1. Data Collection
+Latitude/Longitude of known pollution measurement points
+Pollution levels (e.g., CO₂, PM2.5, NO₂)
+Date and time of measurement
+Traffic data (can be from Google Maps API, Waze, or city open data portals)
+Weather data (wind, temperature, etc., which affect pollution dispersion)
+
+2. Preprocessing
+Normalize time data (e.g., convert to hour of day, day of week, season)
+Engineer features like is_weekend, rush_hour, etc.
+Handle spatial data with care: use projected coordinates (UTM or local projection) for distance calculations, not raw lat/lon.
+
+3. Model Options
+💡 For Interpolation (Spatial)
+
+Kriging (Geostatistics) – Gold standard for spatial interpolation. Uses spatial correlation.
+Toolkits: pykrige, scikit-gstat, gstat (R)
+Works well if your measurements are dense enough.
+Inverse Distance Weighting (IDW)
+Simple and fast, just uses distance to weigh known pollution points.
+Gaussian Process Regression (GPR)
+Can handle both spatial and temporal features.
+Very powerful but slower on large datasets.
+scikit-learn, GPyTorch (for more control)
+🤖 For Predictive ML (Spatio-Temporal)
+
+If you want to combine spatial, temporal, and other features (e.g., traffic):
+
+Random Forest / Gradient Boosting (XGBoost, LightGBM)
+Input: lat, lon, time, weather, traffic
+Predicts pollution at a given point
+Fast and robust for tabular data
+Neural Networks with Spatial Encoding
+Feed lat/lon and other features into a fully connected or spatio-temporal model
+Optionally use Positional Encoding for better spatial awareness
+
+4. UI/Map Interface
+Use Leaflet.js, Mapbox, or Kepler.gl for map interaction
+User clicks → get lat/lon → query model for pollution estimate
+Display with heatmaps or point info
+
+5. Bonus Ideas
+Use Satellite data (e.g., Sentinel) if you want more spatial coverage
+Cluster the city using KMeans and train local models per cluster
+Use time series models (like LSTM) if you have time-based data per station
+🔧 Tooling Stack
+
+Python with scikit-learn, geopandas, xgboost, pykrige
+Jupyter for experimentation
+PostGIS or GeoParquet for storing spatial data
+Frontend: React + MapboxGL or Vue + Leaflet
