@@ -9,6 +9,8 @@ dependencies:
   - scikit-learn
   - geopandas
   - jupyterlab
+  - seaborn        # Advanced visualization
+  - statsmodels    # Time series analysis
   - pip
   - pip:
       - pykrige
@@ -18,3 +20,7 @@ dependencies:
       - lightgbm
       - folium
       - ipyleaflet
+      - mlflow       # Experiment tracking
+      - shap         # Model interpretability
+      - dask         # Scalable computation
+
